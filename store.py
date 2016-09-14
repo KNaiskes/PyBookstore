@@ -6,6 +6,24 @@ class BookStore:
 		self.author = author
 		self.price = price
 		self.isbn = isbn
+		
+	def checkIsbn(self,check):
+		exists = None
+		conn = sqlite3.connect("books.db")
+		conn.text_factory = str
+		c = conn.cursor()
+		c.execute("SELECT * FROM books WHERE isbn = ?",(check,))
+		count = c.fetchall()
+		if (len(count) == 0):
+			exists = True
+		else:
+			exists = False
+
+		return exists
+
+		conn.commit()
+		c.close()
+		conn.close()
 
 	def addNewBook(self):
 		conn = sqlite3.connect('books.db')
@@ -56,6 +74,11 @@ class BookStore:
 			price = input()
 			print("Enter book's ISBN code:")
 			isbn = input()
+			while(self.checkIsbn(isbn) != True):
+					print("There is already a book with isbn ",isbn)
+					print("Try again:")
+					isbn = input()
+			self.checkIsbn(isbn)
 			newbook = BookStore(title,author,price,isbn)
 			newbook.addNewBook()
 		elif(option == 2):
