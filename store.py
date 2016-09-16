@@ -1,4 +1,5 @@
 import sqlite3
+import os.path
 
 class BookStore:
 	def __init__(self,title=None,author=None,price=None,isbn=None):
@@ -29,11 +30,22 @@ class BookStore:
 		conn = sqlite3.connect('books.db')
 		conn.text_factory = str
 		c = conn.cursor()
-		c.execute("CREATE TABLE IF NOT EXISTS books(title TEXT, author TEXT, price REAL,isbn TEXT)")
 		c.execute("INSERT INTO books VALUES(?, ?, ?, ?)",(self.title,self.author,self.price,self.isbn))
 		conn.commit()
 		c.close()
 		conn.close()
+	
+	def propertiesTable(self):
+		conn = sqlite3.connect("books.db")
+		conn.text_factory = str
+		c = conn.cursor()
+		c.execute("CREATE TABLE IF NOT EXISTS books(title TEXT, author TEXT, price REAL,isbn TEXT)")
+		c.execute("INSERT INTO books VALUES(?,?,?,?) ",("Title","Author","Price","ISBN"))
+		conn.commit()
+		c.close()
+		conn.close()
+		
+
 
 	def printDB(self):
 		conn = sqlite3.connect("books.db")
@@ -74,11 +86,12 @@ class BookStore:
 			price = input()
 			print("Enter book's ISBN code:")
 			isbn = input()
+
+			self.checkIsbn(isbn)
 			while(self.checkIsbn(isbn) != True):
 					print("There is already a book with isbn ",isbn)
 					print("Try again:")
 					isbn = input()
-			self.checkIsbn(isbn)
 			newbook = BookStore(title,author,price,isbn)
 			newbook.addNewBook()
 		elif(option == 2):
@@ -92,7 +105,11 @@ class BookStore:
 
 getFunc = BookStore()
 
+if(os.path.isfile("books.db") == False):
+	getFunc.propertiesTable()
+
 getFunc.menu()
+
 
 while(True):
 	print()
