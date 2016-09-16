@@ -11,70 +11,60 @@ class BookStore:
 		self.Format = Format
 		self.pages = pages
 		self.pub_date = pub_date 
-		
+
+	def openDB(self):
+		self.conn = sqlite3.connect("books.db")
+		self.conn.text_factory = str
+		self.c = self.conn.cursor()
+	def closeDB(self):
+		self.closeC = self.c.close()
+		self.save = self.conn.commit()
+		self.close = self.c.close()
+
+	   
+
+
 	def checkIsbn(self,check):
 		exists = None
-		conn = sqlite3.connect("books.db")
-		conn.text_factory = str
-		c = conn.cursor()
-		c.execute("SELECT * FROM books WHERE isbn = ?",(check,))
-		count = c.fetchall()
+		self.openDB()
+		self.c.execute("SELECT * FROM books WHERE isbn = ?",(check,))
+		count = self.c.fetchall()
 		if (len(count) == 0):
 			exists = True
 		else:
 			exists = False
 
 		return exists
-
-		conn.commit()
-		c.close()
-		conn.close()
+		self.closeDB()
 
 	def addNewBook(self):
-		conn = sqlite3.connect('books.db')
-		conn.text_factory = str
-		c = conn.cursor()
-		c.execute("INSERT INTO books VALUES(?, ?, ?, ?, ?,?,?,?)",(self.title,self.author,self.price,self.isbn,self.category,self.Format,self.pages,self.pub_date))
-		conn.commit()
-		c.close()
-		conn.close()
+		self.openDB()
+		self.c.execute("INSERT INTO books VALUES(?, ?, ?, ?, ?,?,?,?)",(self.title,self.author,self.price,self.isbn,self.category,self.Format,self.pages,self.pub_date))
+		self.closeDB()
 	
 	def propertiesTable(self):
-		conn = sqlite3.connect("books.db")
-		conn.text_factory = str
-		c = conn.cursor()
-		c.execute("CREATE TABLE IF NOT EXISTS books(title TEXT, author TEXT, price REAL,isbn TEXT,category TEXT,Format TEXT,pages INTEGER,pub_date TEXT)")
-		c.execute("INSERT INTO books VALUES(?,?,?,?,?,?,?,?) ",("Title","Author","Price","ISBN","Category","Format","Pages","Publication Date"))
-		conn.commit()
-		c.close()
-		conn.close()
-		
-
+		self.openDB()
+		self.c.execute("CREATE TABLE IF NOT EXISTS books(title TEXT, author TEXT, price REAL,isbn TEXT,category TEXT,Format TEXT,pages INTEGER,pub_date TEXT)")
+		self.c.execute("INSERT INTO books VALUES(?,?,?,?,?,?,?,?) ",("Title","Author","Price","ISBN","Category","Format","Pages","Publication Date"))
+		self.closeDB()
 
 	def printDB(self):
-		conn = sqlite3.connect("books.db")
-		conn.text_factory = str
-		c  = conn.cursor()
-		c.execute("SELECT * FROM books")
-		for row in c.fetchall():
+		self.openDB()
+		self.c.execute("SELECT * FROM books")
+		for row in self.c.fetchall():
 			print(row)
-		conn.commit()
-		c.close()
-		conn.close()
+		self.closeDB()
 	
 	def delBook(self,delisbn):
-		conn = sqlite3.connect("books.db")
-		conn.text_factory = str
-		c = conn.cursor()
-		c.execute("SELECT * FROM books WHERE isbn = ?",(delisbn,))
-		count  = c.fetchall()
+		self.openDB()
+		self.c.execute("SELECT * FROM books WHERE isbn = ?",(delisbn,))
+		count  = self.c.fetchall()
 		if (len(count) == 0):
 			print("There is no book with isbn :",delisbn)
 		else:
-			c.execute("DELETE FROM books WHERE isbn=?",(delisbn,))
-		conn.commit()
-		c.close()
-		conn.close()
+			self.c.execute("DELETE FROM books WHERE isbn=?",(delisbn,))
+
+		self.closeDB()
 
 	def menu(self):
 		print("*************************************************************************")
