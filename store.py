@@ -50,20 +50,32 @@ class BookStore:
 
 	def printDB(self):
 		self.openDB()
-		self.c.execute("SELECT * FROM books")
+		self.c.execute("SELECT rowid, * FROM books")
 		for row in self.c.fetchall():
 			print(row)
 		self.closeDB()
 	
-	def delBook(self,delisbn):
+	def checkRow(self,rowNumber):
 		self.openDB()
-		self.c.execute("SELECT * FROM books WHERE isbn = ?",(delisbn,))
-		count  = self.c.fetchall()
-		if (len(count) == 0):
-			print("There is no book with isbn :",delisbn)
-		else:
-			self.c.execute("DELETE FROM books WHERE isbn=?",(delisbn,))
+		count = 0
+		validRow = None
 
+		self.c.execute("SELECT * FROM books")
+		for row in self.c.fetchall():
+			count += 1
+		if(rowNumber > count):
+			validRow = False
+		else:
+			validRow = True
+		return validRow
+
+	
+	def delBook(self,rowNum):
+		self.openDB()
+		self.c.execute("DELETE FROM books WHERE rowid = ?",(rowNum,))
+		self.c.execute("SELECT rowid, * FROM books")
+		self.c.execute("VACUUM books")
+		print("Done")
 		self.closeDB()
 
 	def menu(self):
@@ -100,10 +112,14 @@ class BookStore:
 			listStock = BookStore()
 			listStock.printDB()
 		elif(option == 3):
-			print("Enter book's ISBN code that you want to delete:")
-			deleteIsbn = input()
+			print("Enter book's row number that you want to delete :")
+			rowNum = int(input())
+			while(self.checkRow(rowNum) != True):
+				print("Row : ",rowNum,"is empty")
+				print("Try again:")
+				rowNum = int(input())
 			deletebook = BookStore()
-			deletebook.delBook(deleteIsbn)
+			deletebook.delBook(rowNum)
 
 getFunc = BookStore()
 
