@@ -1,5 +1,6 @@
 import sqlite3
 import os.path
+import subprocess
 
 class BookStore:
 	def __init__(self,title=None,author=None,price=None,isbn=None,category=None,Format=None,pages=None,pub_date=None):
@@ -79,6 +80,7 @@ class BookStore:
 		self.closeDB()
 
 	def menu(self):
+		subprocess.call("clear",shell=True)
 		print("*************************************************************************")
 		print("Enter: 1 to add a new book, 2 to list all books, 3 to remove a book")
 		print("*************************************************************************")
