@@ -3,7 +3,8 @@ import os.path
 import subprocess
 
 class BookStore:
-	def __init__(self,title=None,author=None,price=None,isbn=None,category=None,Format=None,pages=None,pub_date=None):
+	def __init__(self,title=None,author=None,price=None,isbn=None,
+			category=None,Format=None,pages=None,pub_date=None):
 		self.title = title 
 		self.author = author
 		self.price = price
@@ -40,13 +41,21 @@ class BookStore:
 
 	def addNewBook(self):
 		self.openDB()
-		self.c.execute("INSERT INTO books VALUES(?, ?, ?, ?, ?,?,?,?)",(self.title,self.author,self.price,self.isbn,self.category,self.Format,self.pages,self.pub_date))
+		self.c.execute("INSERT INTO books VALUES(?, ?, ?, ?, ?,?,?,?)",
+				(self.title,self.author,self.price,self.isbn,
+					self.category,self.Format,self.pages,
+					self.pub_date))
 		self.closeDB()
 	
 	def propertiesTable(self):
 		self.openDB()
-		self.c.execute("CREATE TABLE IF NOT EXISTS books(title TEXT, author TEXT, price REAL,isbn TEXT,category TEXT,Format TEXT,pages INTEGER,pub_date TEXT)")
-		self.c.execute("INSERT INTO books VALUES(?,?,?,?,?,?,?,?) ",("Title","Author","Price","ISBN","Category","Format","Pages","Publication Date"))
+		self.c.execute("""CREATE TABLE IF NOT EXISTS books(title TEXT,  
+				author TEXT, price REAL,isbn TEXT, 
+				category TEXT,Format TEXT,pages INTEGER, 
+				pub_date TEXT)""")
+		self.c.execute("INSERT INTO books VALUES(?,?,?,?,?,?,?,?) ",
+				("Title","Author","Price","ISBN","Category",
+					"Format","Pages","Publication Date"))
 		self.closeDB()
 
 	def printDB(self):
@@ -81,9 +90,9 @@ class BookStore:
 
 	def menu(self):
 		subprocess.call("clear",shell=True)
-		print("*************************************************************************")
+		print("*" * 80)
 		print("Enter: 1 to add a new book, 2 to list all books, 3 to remove a book")
-		print("*************************************************************************")
+		print("*" * 80)
 		option = int(input())
 		if(option == 1):
 			print("Enter book's title:")
