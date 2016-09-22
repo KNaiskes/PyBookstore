@@ -103,6 +103,10 @@ class BookStore:
 			price = input()
 			print("Enter book's ISBN code:")
 			isbn = input()
+			while(len(isbn) != 6):
+				print("ISBN number must be a six digit number")
+				print("Try again:")
+				isbn = input()
 
 			self.checkIsbn(isbn)
 			while(self.checkIsbn(isbn) != True):
