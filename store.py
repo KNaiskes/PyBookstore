@@ -107,12 +107,13 @@ class BookStore:
 				print("ISBN number must be a six digit number")
 				print("Try again:")
 				isbn = input()
+				if(len(isbn) == 6):
+					self.checkIsbn(isbn)
+					while(self.checkIsbn(isbn) != True):
+						print("ISBN already exists")
+						print("Try again:")
+						isbn = input()
 
-			self.checkIsbn(isbn)
-			while(self.checkIsbn(isbn) != True):
-					print("There is already a book with isbn ",isbn)
-					print("Try again:")
-					isbn = input()
 			print("Enter book's category:")
 			category = input().title()
 			print("Enter book's format:")
