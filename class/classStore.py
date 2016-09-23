@@ -1,5 +1,6 @@
 import sqlite3
 import os.path
+import os
 import subprocess
 
 class BookStore:
@@ -13,9 +14,10 @@ class BookStore:
 		self.Format = Format
 		self.pages = pages
 		self.pub_date = pub_date 
+		self.database=os.getenv("HOME")+"/pyBookStore/database/books.db"
 
 	def openDB(self):
-		self.conn = sqlite3.connect("books.db")
+		self.conn = sqlite3.connect(self.database)
 		self.conn.text_factory = str
 		self.c = self.conn.cursor()
 	def closeDB(self):
@@ -122,13 +124,14 @@ class BookStore:
 			pages = input()
 			print("Enter publication date of the book:")
 			pub_date = input()
-			newbook = BookStore(title,author,price,isbn,category,Format,pages,pub_date)
+			newbook = BookStore(title,author,price,isbn,category,
+					Format,pages,pub_date)
 			newbook.addNewBook()
 		elif(option == 2):
 			listStock = BookStore()
 			listStock.printDB()
 		elif(option == 3):
-			print("Enter book's row number that you want to delete :")
+			print("Enter book's row that you want to delete :")
 			rowNum = int(input())
 			while(self.checkRow(rowNum) != True):
 				print("Row : ",rowNum,"is empty")
@@ -136,25 +139,3 @@ class BookStore:
 				rowNum = int(input())
 			deletebook = BookStore()
 			deletebook.delBook(rowNum)
-
-getFunc = BookStore()
-
-if(os.path.isfile("books.db") == False):
-	getFunc.propertiesTable()
-
-getFunc.menu()
-
-
-while(True):
-	print()
-	print()
-	print("Do you want to do more actions ? y/n :")
-	answ = input()
-	if(answ == "y"):
-		getFunc.menu()
-	elif(answ == "n"):
-		print("GoodBye!")
-		break
-	else:
-		print("Unknown command. Try again")
-
