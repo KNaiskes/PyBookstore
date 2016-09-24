@@ -1,5 +1,4 @@
 import sqlite3
-import os.path
 import os
 import subprocess
 
@@ -24,9 +23,6 @@ class BookStore:
 		self.closeC = self.c.close()
 		self.save = self.conn.commit()
 		self.close = self.c.close()
-
-	   
-
 
 	def checkIsbn(self,check):
 		exists = None
@@ -67,6 +63,13 @@ class BookStore:
 			print(row)
 		self.closeDB()
 	
+	def listByCategory(self,category):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE category = ?",(category,))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
 	def checkRow(self,rowNumber):
 		self.openDB()
 		count = 0
@@ -80,7 +83,6 @@ class BookStore:
 		else:
 			validRow = True
 		return validRow
-
 	
 	def delBook(self,rowNum):
 		self.openDB()
@@ -93,7 +95,8 @@ class BookStore:
 	def menu(self):
 		subprocess.call("clear",shell=True)
 		print("*" * 80)
-		print("Enter: 1 to add a new book, 2 to list all books, 3 to remove a book")
+		print("Enter: 1 to add a new book, 2 to list all books," 
+				"3 to remove a book , 4 to list by category")
 		print("*" * 80)
 		option = int(input())
 		if(option == 1):
@@ -139,3 +142,8 @@ class BookStore:
 				rowNum = int(input())
 			deletebook = BookStore()
 			deletebook.delBook(rowNum)
+		elif(option == 4):
+			listTest= BookStore()
+			print("Enter category:")
+			category = input().title()
+			listTest.listByCategory(category)
