@@ -63,9 +63,58 @@ class BookStore:
 			print(row)
 		self.closeDB()
 	
+	def listByTittle(self,tittle):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE title = ?",(tittle))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+
+	def listByPrice(self,price):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books")
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
+	def listByIsbn(self,isbn):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books")
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+
+	def listByAuthor(self,author):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE author = ?",(author,))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
 	def listByCategory(self,category):
 		self.openDB()
 		self.c.execute("SELECT rowid, * FROM books WHERE category = ?",(category,))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
+	def listByPages(self,pages):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE pages = ?",(pages,))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
+	def listByFormat(self,Format):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE Format = ?",(Format,))
+		for row in self.c.fetchall():
+			print(row)
+		self.closeDB()
+	
+	def listByRelease(self,pub_date):
+		self.openDB()
+		self.c.execute("SELECT rowid, * FROM books WHERE pub_date = ?",(pub_date))
 		for row in self.c.fetchall():
 			print(row)
 		self.closeDB()
@@ -94,10 +143,10 @@ class BookStore:
 
 	def menu(self):
 		subprocess.call("clear",shell=True)
-		print("*" * 80)
+		print("*" * 100)
 		print("Enter: 1 to add a new book, 2 to list all books," 
-				"3 to remove a book , 4 to list by category")
-		print("*" * 80)
+				"3 to remove a book, 4 to list by category")
+		print("*" * 100)
 		option = int(input())
 		if(option == 1):
 			print("Enter book's title:")
