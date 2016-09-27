@@ -145,7 +145,7 @@ class BookStore:
 		subprocess.call("clear",shell=True)
 		print("*" * 100)
 		print("Enter: 1 to add a new book, 2 to list all books," 
-				"3 to remove a book, 4 to list by category")
+				"3 to remove a book, 4 to search by")
 		print("*" * 100)
 		option = int(input())
 		if(option == 1):
@@ -192,7 +192,9 @@ class BookStore:
 			deletebook = BookStore()
 			deletebook.delBook(rowNum)
 		elif(option == 4):
-			listTest= BookStore()
-			print("Enter category:")
-			category = input().title()
-			listTest.listByCategory(category)
+			subprocess.call("clear",shell=True)
+			print("Enter: 1 to search by Title, 2 to search by author"
+					"3 to search by price, 4 to search by isbn" 
+					"5 to search by pages, 6 to search by format"
+					"7 to search by release date")
+			option = int(input())
