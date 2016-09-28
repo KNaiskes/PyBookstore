@@ -63,9 +63,9 @@ class BookStore:
 			print(row)
 		self.closeDB()
 	
-	def listByTittle(self,tittle):
+	def listByTittle(self,title):
 		self.openDB()
-		self.c.execute("SELECT rowid, * FROM books WHERE title = ?",(tittle))
+		self.c.execute("SELECT rowid, * FROM books WHERE title = ?",(title))
 		for row in self.c.fetchall():
 			print(row)
 		self.closeDB()
@@ -193,8 +193,39 @@ class BookStore:
 			deletebook.delBook(rowNum)
 		elif(option == 4):
 			subprocess.call("clear",shell=True)
-			print("Enter: 1 to search by Title, 2 to search by author"
-					"3 to search by price, 4 to search by isbn" 
-					"5 to search by pages, 6 to search by format"
-					"7 to search by release date")
+			listBy = BookStore()
+			print("Enter: 1 to search by Tittle,"
+					" 2 to search by author,"
+					"3 to search by price," 
+					"4 to search by pages,"
+					"5 to search by format,"
+					"6 to search by release date")
+
 			option = int(input())
+
+			if(option == 1):
+				print("Enter title:")
+				title = input()
+				listBy.listByTittle(title)
+			elif(option == 2):
+				print("Enter author:")
+				author = input().title()
+				listBy.listByAuthor(author)
+			elif(option == 3):
+				print("Enter price:")
+				price = float(input()) #MUST BE FIXED
+				listBy.listByPrice(price)
+			elif(option == 4):
+				print("Enter pages:")
+				pages = input()
+				listBy.listByPages(pages)
+			elif(option == 5):
+				print("Enter format:")
+				Format = input().title()
+				listBy.listByFormat(Format)
+			elif(option == 6):
+				print("Enter release :") #MUST BE FIXED 
+				release = input()
+				listBy.listByRelease(release)
+
+
