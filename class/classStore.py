@@ -143,13 +143,13 @@ class BookStore:
 
 	def menu(self):
 		subprocess.call("clear",shell=True)
-		print("*" * 80)
 		print("Enter:\n"
-				"1 to add a new book,\n" 
-				"2 to list all books,\n" 
-				"3 to remove a book,\n" 
-				"4 to search by keyword")
-		print("*" * 80)
+				"# # # # # # # # # # # # # #\n"
+				"# 1) to add a new book    #\n" 
+				"# 2) to list all books    #\n" 
+				"# 3) to remove a book     #\n" 
+				"# 4) to search by keyword #\n"
+				"# # # # # # # # # # # # # #")
 		option = int(input())
 		if(option == 1):
 			print("Enter book's title:")
@@ -198,20 +198,18 @@ class BookStore:
 			subprocess.call("clear",shell=True)
 			listBy = BookStore()
 
-			print("*" * 80)
 			print("Enter:\n"
-					"1 to search by Tittle,\n"
-					"2 to search by author,\n"
-					"3 to search by price,\n" 
-					"4 to search by pages,\n"
-					"5 to search by format,\n"
-					"6 to search by release date\n")
-
-			print("*" * 80)
+					"# # # # # # # # # # # # # # # # #\n"
+					"# 1) to search by Tittle        #\n"
+					"# 2) to search by author        #\n"
+					"# 3) to search by price         #\n" 
+					"# 4) to search by pages         #\n"
+					"# 5) to search by format        #\n"
+					"# 6) to search by release date  #\n"
+					"# # # # # # # # # # # # # # # # # ")
 
 			option = int(input())
 			subprocess.call("clear",shell=True)
-
 
 			if(option == 1):
 				print("Enter title:")
@@ -237,7 +235,3 @@ class BookStore:
 				print("Enter release :") #MUST BE FIXED 
 				release = input()
 				listBy.listByRelease(release)
-
-
-
-
