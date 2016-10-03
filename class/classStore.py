@@ -24,6 +24,9 @@ class BookStore:
 		self.save = self.conn.commit()
 		self.close = self.c.close()
 
+	####################################
+	#Properties                        #
+	####################################
 	def checkIsbn(self,check):
 		exists = None
 		self.openDB()
@@ -44,6 +47,13 @@ class BookStore:
 					self.category,self.Format,self.pages,
 					self.pub_date))
 		self.closeDB()
+	def delBook(self,rowNum):
+		self.openDB()
+		self.c.execute("DELETE FROM books WHERE rowid = ?",(rowNum,))
+		self.c.execute("SELECT rowid, * FROM books")
+		self.c.execute("VACUUM books")
+		print("Done")
+		self.closeDB()
 	
 	def propertiesTable(self):
 		self.openDB()
@@ -56,12 +66,20 @@ class BookStore:
 					"Format","Pages","Publication Date"))
 		self.closeDB()
 
+		##################################
+		#End of properties               #
+		##################################
+
 	def printDB(self):
 		self.openDB()
 		self.c.execute("SELECT rowid, * FROM books")
 		for row in self.c.fetchall():
 			print(row)
 		self.closeDB()
+
+		############################################
+		# Begin of list by functions		   #
+		############################################
 	
 	def listByTittle(self,title):
 		self.openDB()
@@ -118,6 +136,10 @@ class BookStore:
 		for row in self.c.fetchall():
 			print(row)
 		self.closeDB()
+
+		#####################################
+		#End of list by functions           #
+		#####################################
 	
 	def checkRow(self,rowNumber):
 		self.openDB()
@@ -133,13 +155,7 @@ class BookStore:
 			validRow = True
 		return validRow
 	
-	def delBook(self,rowNum):
-		self.openDB()
-		self.c.execute("DELETE FROM books WHERE rowid = ?",(rowNum,))
-		self.c.execute("SELECT rowid, * FROM books")
-		self.c.execute("VACUUM books")
-		print("Done")
-		self.closeDB()
+	
 
 	def menu(self):
 		subprocess.call("clear",shell=True)
