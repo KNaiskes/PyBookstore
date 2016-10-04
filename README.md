@@ -1,7 +1,8 @@
 **A command line bookstore**
 
-![2016-09-30-201211_1438x733_scrot](https://cloud.githubusercontent.com/assets/6069054/19000283/69392ac4-874a-11e6-8129-e3159c0667e7.png)
-![2016-09-30-201248_1439x714_scrot](https://cloud.githubusercontent.com/assets/6069054/19000288/6e1b2e20-874a-11e6-830c-fb25f52c4d55.png)
+![f](https://cloud.githubusercontent.com/assets/6069054/19085243/4d4b925e-8a72-11e6-8694-7a6ce1971f9c.png)
+
+![s](https://cloud.githubusercontent.com/assets/6069054/19085249/583bf604-8a72-11e6-8817-861f50758132.png)
 
 
 
