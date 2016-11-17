@@ -7,4 +7,4 @@
 
 
 
-Project (nor the documentation) is still completed
+### Requirements : python3 and sqlite3 (sqlite3 is included in the standard library of python3)
